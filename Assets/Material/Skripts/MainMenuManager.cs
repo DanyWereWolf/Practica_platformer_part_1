@@ -40,7 +40,7 @@ public class MainMenuManager : MonoBehaviour
             reloading = 1; // Устанавливаем reloading в 1 перед загрузкой сцены
         }
         // Проверяем, завершена ли анимация начала игры
-        else if (startGame.GetCurrentAnimatorStateInfo(0).IsName("StartGamePannel") &&
+        if (startGame.GetCurrentAnimatorStateInfo(0).IsName("StartGamePannel") &&
             startGame.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
         {
             sceneLoader.LoadGame();

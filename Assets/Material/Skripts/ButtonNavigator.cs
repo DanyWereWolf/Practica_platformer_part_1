@@ -8,7 +8,7 @@ public class ButtonNavigator : MonoBehaviour
     private int selectedButtonIndex = -1;
     [Header("Кнопки")]
     public GameObject selectPlay;
-    public GameObject newPlayButton;
+    //public GameObject newPlayButton;
     public GameObject selectNewPlay;
     public GameObject selectOptions;
     public GameObject selectExit;
@@ -138,12 +138,12 @@ public class ButtonNavigator : MonoBehaviour
         if (Played == false)
         {
             PlayedText.text = "Новая игра";
-            newPlayButton.SetActive(false);
+            //newPlayButton.SetActive(false);
         }
         else if (Played == true)
         {
             PlayedText.text = "Продолжить";
-            newPlayButton.SetActive(true);
+            //newPlayButton.SetActive(true);
         }
     }
 
