@@ -1627,7 +1627,7 @@ GameObject:
   - component: {fileID: 596805822}
   - component: {fileID: 596805821}
   m_Layer: 5
-  m_Name: Image
+  m_Name: EscImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
