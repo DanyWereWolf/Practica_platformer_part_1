@@ -15,7 +15,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (buttonNavigator != null)
         {
-            buttonNavigator.Played = true;
+            buttonNavigator.Played = false;
             buttonNavigator.SaveVolume(); // Устанавливаем Played в true и сохраняем состояние
         }
         SceneManager.LoadScene(1);
