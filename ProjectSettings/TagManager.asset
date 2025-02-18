@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - NewPlayText
   - Ground
   - Destructible
+  - Damageable
+  - Enamy
+  - dead
+  - Players
+  - Camera
   layers:
   - Default
   - TransparentFX
@@ -17,9 +21,9 @@ TagManager:
   - Wheel
   - Ground
   - Box
-  - 
-  - 
-  - 
+  - Damageable
+  - die
+  - Camera
   - 
   - 
   - 
