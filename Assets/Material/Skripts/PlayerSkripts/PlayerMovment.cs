@@ -14,6 +14,9 @@ public class PlayerMovment : MonoBehaviour
     [SerializeField] private AnimationCurve curve;
     [SerializeField] private LayerMask groundMask;
 
+    public float hangTime = 0.5f;
+    private float hangCounter;
+
 
     private Animator animator;
     private Rigidbody2D rb;
@@ -29,22 +32,31 @@ public class PlayerMovment : MonoBehaviour
         float direction = Input.GetAxis("Horizontal");
         bool isJumpButtonPressed = Input.GetButtonDown("Jump");
         Move(direction, isJumpButtonPressed);
-
         Reflect(direction);
     }
     private void FixedUpdate()
     {
         Vector3 overlapCirclePosition = groundColliderTransform.position;
         isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, jumpOffset, groundMask);
+        if (isGrounded)
+        {
+            hangCounter = hangTime;
+        }
+        else
+        {
+            hangCounter -= Time.deltaTime;
+        }
 
         if (isGrounded)
         {
+            
             ResetJump();
         }
+
     }
     public void Move(float derection, bool isJampButtonPressed)
     {
-        if (isJampButtonPressed && isGrounded)
+        if (isJampButtonPressed && hangCounter > 0f)
         {
             jump();
             animator.SetBool("jump", true);

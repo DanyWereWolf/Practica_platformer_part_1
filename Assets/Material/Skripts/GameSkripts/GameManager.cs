@@ -1,22 +1,139 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public SceneLoader sceneLoader;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static GameManager instance;
+    public Text textScore;
+    public Text FinalScore;
+    public Text LoseScore;
+    public int score;
+
+    public GameObject pausePanel; // Панель паузы
+    private bool isPaused = false; // Состояние паузы
+
+    private int levelComplete;
+    private int sceneIndex;
+
+    public PlayerInput playerInput;
+    public PlayerMovment playerMovment;
+
+    private void Awake()
     {
-        
-    }
-    public void mainMenuOnCklick()
-    {
-        sceneLoader.MainMenu();
+        // Создаем одиночный экземпляр GameManager
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Не уничтожать при загрузке новой сцены
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        pausePanel.SetActive(false);
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        levelComplete = PlayerPrefs.GetInt("LevelComplete", 0); // 0 - значение по умолчанию
+        UpdateScoreText();
+    }
+
+    public void EndGame()
+    {
+        if (sceneIndex == 5)
+        {
+            Invoke("MainMenu", 1f);
+        }
+        else
+        {
+            if (levelComplete < sceneIndex)
+            {
+                PlayerPrefs.SetInt("LevelComplete", sceneIndex);
+            }
+            Invoke("NextLevel", 1f);
+        }
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+    public void Continue()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(sceneIndex + 1);
+        Time.timeScale = 1f;
+    }
+
+    public void Repeat()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        UpdateScoreText(); // Обновляем текст счета после изменения
+    }
+
+    private void UpdateScoreText()
+    {
+        LoseScore.text = "Очков: " + score.ToString();
+        textScore.text = score.ToString();
+        FinalScore.text = "Очков: " + score.ToString();
+    }
+
+    private void Update()
+    {
+        // Проверяем, нажата ли клавиша Escape
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+        UpdateScoreText();
+    }
+    private void TogglePause()
+    {
+        isPaused = !isPaused; // Меняем состояние паузы
+
+        // Активируем или деактивируем панель паузы
+        pausePanel.SetActive(isPaused);
+
+        // Приостанавливаем или возобновляем игру
+        if (isPaused)
+        {
+            Time.timeScale = 0f; // Приостанавливаем игру
+        }
+        else
+        {
+            Time.timeScale = 1f; // Возобновляем игру
+        }
+    }
+    public void EnableControls()
+    {
+        playerMovment.enabled = true;
+        playerInput.enabled = true;
+    }
+    public void DisableControls()
+    {
+        playerMovment.enabled = false;
+        playerInput.enabled = false;
     }
 }

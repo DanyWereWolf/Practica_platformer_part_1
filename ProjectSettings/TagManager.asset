@@ -11,6 +11,8 @@ TagManager:
   - dead
   - Players
   - Camera
+  - EnamyStopper
+  - Bullet
   layers:
   - Default
   - TransparentFX

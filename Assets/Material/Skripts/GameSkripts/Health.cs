@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
     [SerializeField] public float maxHealth;
     [SerializeField] public float currentHealth;
     public bool isAlive;
+    public static Health instance;
 
     public void Awake()
     {

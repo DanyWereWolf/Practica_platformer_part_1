@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
@@ -6,41 +7,53 @@ public class SceneLoader : MonoBehaviour
     public MainMenuManager mainMenu;
     private ButtonNavigator buttonNavigator; // Ссылка на компонент GameState
 
+    [Header("из меню в игру")]
+    public Animator startGame;
+    public GameObject startGamePanel;
+
     [System.Obsolete]
     private void Start()
     {
+        startGamePanel.SetActive(false);
         buttonNavigator = FindObjectOfType<ButtonNavigator>();
     }
-    public void LoadGame()
+
+    public void LoadLevel(int levelIndex)
     {
         if (buttonNavigator != null)
         {
             buttonNavigator.Played = false;
             buttonNavigator.SaveVolume(); // Устанавливаем Played в true и сохраняем состояние
         }
-        SceneManager.LoadScene(1);
-        Invoke("OnDisable", 0.1f); // Вызываем OnDisable через 0.1 секунды после загрузки сцены
+
+        startGamePanel.SetActive(true);
+        startGame.Play("StartGamePannel");
+
+        // Используем корутину для ожидания завершения анимации
+        StartCoroutine(WaitForAnimationAndLoadScene(levelIndex));
     }
+
+    private IEnumerator WaitForAnimationAndLoadScene(int levelIndex)
+    {
+        // Ждем завершения анимации
+        while (!startGame.GetCurrentAnimatorStateInfo(0).IsName("StartGamePannel") ||
+               startGame.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            yield return null; // Ждем один кадр
+        }
+
+        SceneManager.LoadScene(levelIndex);
+    }
+
     public void MainMenu()
     {
         SceneManager.LoadScene(0);
-        Invoke("OnEnable", 0.1f); // Вызываем OnEnable через 0.1 секунды после загрузки сцены
         Time.timeScale = 1f;
     }
+
     public void Exit()
     {
         mainMenu.reloading = 0;
         Application.Quit();
     }
-    //-------------------Блок для доработки главного меню
-    //public void NewLoadGame()
-    //{
-    //    if (buttonNavigator != null)
-    //    {
-    //        buttonNavigator.Played = false;
-    //        buttonNavigator.SaveVolume(); // Устанавливаем Played в false и сохраняем состояние
-    //    }
-    //    SceneManager.LoadScene(1);
-    //    Invoke("OnDisable", 0.1f); // Вызываем OnDisable через 0.1 секунды после загрузки сцены
-    // }
 }
