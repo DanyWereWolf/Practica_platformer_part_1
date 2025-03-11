@@ -26,7 +26,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 514902
+  Length: 1008065
 --- !u!114 &-7559957325564310627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +54,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3657
+--- !u!114 &-6782395354070551535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Jump
+  m_EditorClassIdentifier: 
+  Path: event:/Jump
+  Guid:
+    Data1: 147057791
+    Data2: 1206942353
+    Data3: 908723853
+    Data4: -1006246537
+  Banks:
+  - {fileID: -6742104374636376482}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 548
 --- !u!114 &-6742104374636376482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,10 +96,10 @@ MonoBehaviour:
   Path: ../../FmodGame/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638772957004875316
+  lastModified: 638773178002640944
   FileSizes:
   - Name: Desktop
-    Value: 6871776
+    Value: 13296352
   Exists: 1
 --- !u!114 &-3237494529203544164
 MonoBehaviour:
@@ -143,10 +170,10 @@ MonoBehaviour:
   Path: ../../FmodGame/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638772957004987368
+  lastModified: 638773178002650952
   FileSizes:
   - Name: Desktop
-    Value: 1068
+    Value: 1104
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -171,12 +198,13 @@ MonoBehaviour:
   - {fileID: 6946851876884268564}
   - {fileID: -7559957325564310627}
   - {fileID: -3237494529203544164}
+  - {fileID: -6782395354070551535}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6742104374636376482}
   StringsBanks:
   - {fileID: -671560508624998574}
-  cacheTime: 638772957004987368
+  cacheTime: 638773178002650952
   cacheVersion: 131623
 --- !u!114 &5776195675315851434
 MonoBehaviour:

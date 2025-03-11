@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 
@@ -7,8 +9,14 @@ public class Chest : MonoBehaviour
     public GameObject inf;
     public bool isOpen = false;
 
+    private EventInstance musicEventCoin;
+
+    
     private void Start()
     {
+        musicEventCoin = RuntimeManager.CreateInstance("event:/Coin");
+        Vector3 position = transform.position;
+        musicEventCoin.set3DAttributes(RuntimeUtils.To3DAttributes(position));
         anim.enabled = false;
         inf.SetActive(false);
         anim.GetComponent<Animator>();
@@ -17,6 +25,7 @@ public class Chest : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         GameManager.instance.AddScore(1000);
+        musicEventCoin.start();
         Destroy(gameObject);
     }
     private void Update()

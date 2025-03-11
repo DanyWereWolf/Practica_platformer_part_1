@@ -61,7 +61,6 @@ public class PlayerMovment : MonoBehaviour
 
         if (isGrounded)
         {
-            
             ResetJump();
         }
 
