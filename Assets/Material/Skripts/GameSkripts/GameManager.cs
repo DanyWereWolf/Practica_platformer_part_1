@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int score;
 
     public GameObject pausePanel; // Панель паузы
+    public GameObject optionPannel;
     private bool isPaused = false; // Состояние паузы
 
     private int levelComplete;
@@ -19,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public PlayerInput playerInput;
     public PlayerMovment playerMovment;
+
+    private EventInstance musicEventOnClick;
 
     private void Awake()
     {
@@ -36,6 +41,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        musicEventOnClick = RuntimeManager.CreateInstance("event:/Click");
+        Vector3 position = transform.position;
+        musicEventOnClick.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+
         pausePanel.SetActive(false);
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
         levelComplete = PlayerPrefs.GetInt("LevelComplete", 0); // 0 - значение по умолчанию
@@ -105,6 +114,7 @@ public class GameManager : MonoBehaviour
         // Проверяем, нажата ли клавиша Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            playerMovment.StopSoundMove();
             TogglePause();
         }
         UpdateScoreText();
@@ -115,7 +125,7 @@ public class GameManager : MonoBehaviour
 
         // Активируем или деактивируем панель паузы
         pausePanel.SetActive(isPaused);
-
+        
         // Приостанавливаем или возобновляем игру
         if (isPaused)
         {
@@ -123,6 +133,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            optionPannel.SetActive(false);
             Time.timeScale = 1f; // Возобновляем игру
         }
     }
@@ -135,5 +146,9 @@ public class GameManager : MonoBehaviour
     {
         playerMovment.enabled = false;
         playerInput.enabled = false;
+    }
+    public void OnClick()
+    {
+        musicEventOnClick.start();
     }
 }

@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +24,19 @@ public class PlayerMovment : MonoBehaviour
     private Rigidbody2D rb;
     public bool faceRight = true;
 
+    private EventInstance musicEventMove;
+    private bool isPlaying = false;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+    }
+    private void Start()
+    {
+        musicEventMove = RuntimeManager.CreateInstance("event:/Move");
+        Vector3 position = transform.position;
+        musicEventMove.set3DAttributes(RuntimeUtils.To3DAttributes(position));
     }
     void Update()
     {
@@ -33,6 +44,7 @@ public class PlayerMovment : MonoBehaviour
         bool isJumpButtonPressed = Input.GetButtonDown("Jump");
         Move(direction, isJumpButtonPressed);
         Reflect(direction);
+        UpdateSound(direction);
     }
     private void FixedUpdate()
     {
@@ -90,6 +102,29 @@ public class PlayerMovment : MonoBehaviour
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             faceRight = !faceRight;
         }
+    }
+    public void UpdateSound(float derection)
+    {
+        if (Mathf.Abs(derection) >= 0.01f && isGrounded && gameObject.GetComponent<Health>().isAlive == true)
+        {
+            if (!isPlaying)
+            {
+                musicEventMove.start();
+                isPlaying = true;
+            }
+        }
+        else
+        {
+            if (isPlaying || gameObject.GetComponent<Health>().isAlive == false)
+            {
+                StopSoundMove();
+                isPlaying = false;
+            }
+        }
+    }
+    public void StopSoundMove()
+    {
+        musicEventMove.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
     public void ResetJump()
     {

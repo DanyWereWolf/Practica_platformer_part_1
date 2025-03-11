@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +12,8 @@ public class NextLevel : MonoBehaviour
     public GameObject nextLoadLevel;
 
     public GameObject ScorePannel;
+
+    private EventInstance musicEventComplite;
 
     private void Awake()
     {
@@ -27,6 +31,10 @@ public class NextLevel : MonoBehaviour
 
     void Start()
     {
+        musicEventComplite = RuntimeManager.CreateInstance("event:/Complete");
+        Vector3 position = transform.position;
+        musicEventComplite.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+
         ScorePannel.SetActive(false);
         anim.enabled = false;
         nextLoadLevel.SetActive(false);
@@ -36,6 +44,7 @@ public class NextLevel : MonoBehaviour
     private IEnumerator nextLevel()
     {
         yield return new WaitForSeconds(1.5f);
+        musicEventComplite.start();
         ScorePannel.SetActive(true);
         Time.timeScale = 0f;
     }

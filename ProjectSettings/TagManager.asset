@@ -13,6 +13,9 @@ TagManager:
   - Camera
   - EnamyStopper
   - Bullet
+  - ElevatorStopper
+  - Water
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -26,8 +29,8 @@ TagManager:
   - Damageable
   - die
   - Camera
-  - 
-  - 
+  - Trigger
+  - Bullet
   - 
   - 
   - 

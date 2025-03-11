@@ -501,7 +501,6 @@ GameObject:
   - component: {fileID: 4814025213246592459}
   - component: {fileID: 7239043828473113131}
   - component: {fileID: 3546036389362265774}
-  - component: {fileID: 2498326183467155169}
   m_Layer: 0
   m_Name: TX Village Props - Seesaw 01 Board
   m_TagString: Untagged
@@ -625,25 +624,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.00276, y: 0.21875}
   m_EdgeRadius: 0
---- !u!251 &2498326183467155169
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879292759653627481}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 170
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!1 &882566671489396385
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,6 +3449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8050901916108269992}
   nextLoadLevel: {fileID: 0}
+  ScorePannel: {fileID: 0}
 --- !u!1 &5828609984780959590
 GameObject:
   m_ObjectHideFlags: 0

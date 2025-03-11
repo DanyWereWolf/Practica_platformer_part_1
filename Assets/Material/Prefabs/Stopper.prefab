@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1340724298232464156}
   - component: {fileID: 4756135096203607450}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Stopper
   m_TagString: EnamyStopper
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}

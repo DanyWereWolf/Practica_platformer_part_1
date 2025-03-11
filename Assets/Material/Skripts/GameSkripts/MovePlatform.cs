@@ -9,16 +9,16 @@ public class MovePlatform : MonoBehaviour
     {
         UpdateMotorSpeed(motorSpeed);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.CompareTag("ElevatorStopper"))
         {
+            Debug.Log("ห่๔๒");
             motorSpeed = -motorSpeed;
             UpdateMotorSpeed(motorSpeed);
         }
     }
-
+  
     private void UpdateMotorSpeed(float speed)
     {
         JointMotor2D motor = sliderJoint.motor;

@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +18,10 @@ public class Player : MonoBehaviour
     public float healFloat;
     private PlayerInput playerInput;
     private PlayerMovment playerMovment;
+
     public GameObject losPannel;
+    private EventInstance musicEventDeath;
+
     private void Awake()
     {
         playerMovment = GetComponent<PlayerMovment>();
@@ -26,6 +31,9 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
+        musicEventDeath = RuntimeManager.CreateInstance("event:/Death");
+        Vector3 position = transform.position;
+        musicEventDeath.set3DAttributes(RuntimeUtils.To3DAttributes(position));
         // Сохраняем исходный цвет спрайта
         originalColor = spriteRenderer.color;
     }
@@ -43,6 +51,7 @@ public class Player : MonoBehaviour
 
         if (health.isAlive == false)
         {
+
             playerMovment.enabled = false;
             playerInput.enabled = false;
             animator.SetBool("death", true);
@@ -64,6 +73,9 @@ public class Player : MonoBehaviour
     private IEnumerator Lose()
     {
         yield return new WaitForSeconds(1f);
+        float direction = Input.GetAxis("Horizontal");
+        playerMovment.UpdateSound(direction);
+        musicEventDeath.start();
         losPannel.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -74,5 +86,17 @@ public class Player : MonoBehaviour
             TakeDamage();
         }
 
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            health.currentHealth = 0;
+            playerMovment.enabled = false;
+            playerInput.enabled = false;
+            animator.SetBool("death", true);
+            StartCoroutine(Lose());
+            Debug.Log("Наш герой погиб");
+        }
     }
 }
